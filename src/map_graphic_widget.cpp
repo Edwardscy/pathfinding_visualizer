@@ -4,6 +4,7 @@
 
 #include "map_graphic_widget.h"
 
+#include <QDebug>
 
 
 MapGraphicWidget::MapGraphicWidget(QWidget *parent)
@@ -49,6 +50,52 @@ void MapGraphicWidget::initUI() {
 
 void MapGraphicWidget::initConnect() {
 
+    connect(ui_->load_map_bt, SIGNAL(clicked()), this,
+            SLOT(slot_load_map_bt()));
+
+    connect(ui_->load_cbs_result_bt, SIGNAL(clicked()), this,
+            SLOT(slot_load_cbs_result_bt()));
+}
+
+
+void MapGraphicWidget::slot_load_map_bt()
+{
+
+    QString filter;
+    filter = "";
+
+    file_name
+            = QFileDialog::getOpenFileName(this, tr("Open file"), m_directory, filter);
+    if (file_name.isEmpty())
+        return;
+
+    QFileInfo info(file_name);
+    m_directory = info.absoluteDir().absolutePath();
+
+    file.setFileName(file_name);
+
+    if (!file.open(QFile::ReadOnly)) {
+        QString msg = tr("Failed to open %1\n%2")
+                .arg(QDir::toNativeSeparators(file_name), file.errorString());
+        QMessageBox::warning(this, tr("Error"), msg);
+        return;
+    }
+
+    QString load_file_name = info.fileName();
+    QString load_file_path_name = info.path();
+    QStringList load_file_name_list = load_file_name.split(".");
+
+    qDebug() << "load_file_name:" << load_file_name;
+    qDebug() << "load_file_path_name:" << load_file_path_name;
+
+
 
 }
+
+void MapGraphicWidget::slot_load_cbs_result_bt()
+{
+
+    qDebug() << "slot_load_cbs_result_bt" ;
+}
+
 

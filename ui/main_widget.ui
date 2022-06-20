@@ -55,6 +55,48 @@
     <string>Load CBS result</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="last_step_bt">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>570</y>
+     <width>271</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Last Step</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="next_step_bt">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>690</y>
+     <width>271</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next Step</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="display_text">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>440</y>
+     <width>271</width>
+     <height>101</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
