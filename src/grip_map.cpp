@@ -143,10 +143,10 @@ void GridMap::renderGrids(int grid_size) {
     int start_idx = 0;
     int goal_idx =
             no_of_row_grids_ * (no_of_row_grids_ - 1) + (no_of_row_grids_ - 1);
-    start_grid_ = grids_->at(start_idx);
-    start_grid_->setStart();
-    goal_grid_ = grids_->at(goal_idx);
-    goal_grid_->setGoal();
+//    start_grid_ = grids_->at(start_idx);
+//    start_grid_->setStart();
+//    goal_grid_ = grids_->at(goal_idx);
+//    goal_grid_->setGoal();
 
     free_space_idxs_.removeOne(start_idx);
     free_space_idxs_.removeOne(goal_idx);

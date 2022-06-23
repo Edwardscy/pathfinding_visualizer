@@ -33,6 +33,10 @@ public:
     void initUI();
     void initConnect();
 
+public:
+    void parse_map_file();
+    void parse_cbs_result_file();
+
 public slots:
     void slot_load_map_bt();
     void slot_load_cbs_result_bt();

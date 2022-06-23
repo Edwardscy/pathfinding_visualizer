@@ -25,13 +25,16 @@ set(INCLUDE
         include/mainwindow.h
         include/map_graphic_widget.h
         include/grip_map.h
-        include/grid.h)
+        include/grid.h
+        include/parse_data.h)
 
 
 set(SOURCE
         src/mainwindow.cpp
         src/map_graphic_widget.cpp
-        src/grip_map.cpp src/grip.cpp)
+        src/grip_map.cpp
+        src/grip.cpp
+        src/parse_data.cpp)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 qt5_wrap_ui(UI_HEADERS

@@ -41,7 +41,7 @@ void MapGraphicWidget::initUI() {
 
 
     // setting default grid size (50px)
-    int grid_size = 50;
+    int grid_size = 90;
 
     grid_map_ = new GridMap(grid_size, scene_);
     grid_map_->renderGrids(grid_size);
@@ -87,7 +87,22 @@ void MapGraphicWidget::slot_load_map_bt()
 
     qDebug() << "load_file_name:" << load_file_name;
     qDebug() << "load_file_path_name:" << load_file_path_name;
+    qDebug() << "file_name: " << file_name;
 
+    /////
+    QTextStream in(&file);
+    QString line = in.readLine();
+
+    qDebug() << line;
+    while  (!line.isNull())
+    {
+//         process_line(line);
+        line = in.readLine();
+//        displayString.append(line);
+        qDebug() << line;
+    }
+//    ui->textEdit->clear();
+//    ui->textEdit->setPlainText(displayString);
 
 
 }
@@ -96,6 +111,17 @@ void MapGraphicWidget::slot_load_cbs_result_bt()
 {
 
     qDebug() << "slot_load_cbs_result_bt" ;
+}
+
+
+void MapGraphicWidget::parse_map_file()
+{
+
+}
+
+void MapGraphicWidget::parse_cbs_result_file()
+{
+
 }
 
 
