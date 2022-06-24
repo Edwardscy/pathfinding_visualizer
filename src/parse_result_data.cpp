@@ -35,10 +35,14 @@ void ParseResultData::parse(QTextStream &in) {
                 qDebug() << agent_name;
                 QRegExp agent_path_rx("\\(\\d*,\\d*\\)");
 
-                for(int nPos=0; nPos= agent_path_rx.indexIn(line, nPos), nPos>=0; nPos+=agent_path_rx.matchedLength())
+                for(int nPos=0; nPos = agent_path_rx.indexIn(line, nPos), nPos>=0; nPos+=agent_path_rx.matchedLength())
                 {
-                    qDebug()<<nPos; //return index
-                    qDebug()<<agent_path_rx.cap(0);//return string that match
+//                    qDebug()<<nPos; //return index
+//                    qDebug() << agent_path_rx.cap(0);//return string that match
+
+                    QString path_str = agent_path_rx.cap(0);
+
+                    parse_item_pos(path_str);
                 }
             }
 
@@ -48,6 +52,27 @@ void ParseResultData::parse(QTextStream &in) {
         }
     }
 }
+
+
+void ParseResultData::parse_item_pos(QString path_str){
+
+    QRegExp rx("(\\d+)");
+
+    int x{0};
+    int y{0};
+
+    int n_pos = rx.indexIn(path_str, 0);
+    x = rx.cap(0).toInt();
+
+    rx.indexIn(path_str, n_pos + rx.matchedLength());
+    y = rx.cap(0).toInt();
+
+    qDebug() << path_str << "x: " << x << "y: " << y;
+
+
+
+}
+
 
 void ParseResultData::print_map_infos(){
 

@@ -20,6 +20,7 @@ public:
 
 public:
     void parse(QTextStream &in);
+    void parse_item_pos(QString path_str);
 
     void print_map_infos();
 private:
