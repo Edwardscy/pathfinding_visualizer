@@ -12,6 +12,12 @@
 
 #include "custom_data.h"
 
+#include "json.hpp"
+
+
+using json = nlohmann::json;
+
+
 class ParseResultData
 {
 public:
@@ -24,6 +30,7 @@ public:
 
     void print_map_infos();
 private:
+    json result_json;
 //    QString type;
 //    int height;
 //    int width;

@@ -29,22 +29,30 @@ void ParseResultData::parse(QTextStream &in) {
             QRegExp agent_name_rx("^Agent \\d?");
             agent_name_rx.indexIn(line);
             QString agent_name = agent_name_rx.cap(0);
-//            qDebug() << agent_name;
 
-            if(agent_name == "Agent 9"){
-                qDebug() << agent_name;
-                QRegExp agent_path_rx("\\(\\d*,\\d*\\)");
+            qDebug() << agent_name;
+            QRegExp agent_path_rx("\\(\\d*,\\d*\\)");
 
-                for(int nPos=0; nPos = agent_path_rx.indexIn(line, nPos), nPos>=0; nPos+=agent_path_rx.matchedLength())
-                {
-//                    qDebug()<<nPos; //return index
-//                    qDebug() << agent_path_rx.cap(0);//return string that match
-
-                    QString path_str = agent_path_rx.cap(0);
-
-                    parse_item_pos(path_str);
-                }
+            for(int nPos=0; nPos = agent_path_rx.indexIn(line, nPos), nPos>=0; nPos+=agent_path_rx.matchedLength())
+            {
+                QString path_str = agent_path_rx.cap(0);
+                parse_item_pos(path_str);
             }
+
+
+//            if(agent_name == "Agent 9"){
+//                qDebug() << agent_name;
+//                QRegExp agent_path_rx("\\(\\d*,\\d*\\)");
+//
+//                for(int nPos=0; nPos = agent_path_rx.indexIn(line, nPos), nPos>=0; nPos+=agent_path_rx.matchedLength())
+//                {
+////                    qDebug()<<nPos; //return index
+////                    qDebug() << agent_path_rx.cap(0);//return string that match
+//
+//                    QString path_str = agent_path_rx.cap(0);
+//                    parse_item_pos(path_str);
+//                }
+//            }
 
 
 
