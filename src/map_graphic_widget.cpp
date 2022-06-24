@@ -5,6 +5,7 @@
 #include "map_graphic_widget.h"
 
 #include "parse_data.h"
+#include "parse_result_data.h"
 
 #include <QDebug>
 
@@ -122,7 +123,41 @@ void MapGraphicWidget::slot_load_map_bt()
 void MapGraphicWidget::slot_load_cbs_result_bt()
 {
 
-    qDebug() << "slot_load_cbs_result_bt" ;
+    QString filter;
+    filter = "";
+
+    file_name
+            = QFileDialog::getOpenFileName(this, tr("Open file"), m_directory, filter);
+    if (file_name.isEmpty())
+        return;
+
+    QFileInfo info(file_name);
+    m_directory = info.absoluteDir().absolutePath();
+
+    file.setFileName(file_name);
+
+    if (!file.open(QFile::ReadOnly)) {
+        QString msg = tr("Failed to open %1\n%2")
+                .arg(QDir::toNativeSeparators(file_name), file.errorString());
+        QMessageBox::warning(this, tr("Error"), msg);
+        return;
+    }
+
+    QString load_file_name = info.fileName();
+    QString load_file_path_name = info.path();
+    QStringList load_file_name_list = load_file_name.split(".");
+
+    qDebug() << "load_file_name:" << load_file_name;
+    qDebug() << "load_file_path_name:" << load_file_path_name;
+    qDebug() << "file_name: " << file_name;
+
+    /////
+    QTextStream in(&file);
+
+    ParseResultData parse_result_obj;
+    parse_result_obj.parse(in);
+
+    parse_result_obj.print_map_infos();
 }
 
 

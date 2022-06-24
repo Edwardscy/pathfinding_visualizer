@@ -11,6 +11,8 @@
 
 #include <vector>
 
+#include "custom_data.h"
+
 #include "json.hpp"
 
 
@@ -20,15 +22,7 @@ using json = nlohmann::json;
 
 void parse_map_data(QTextStream &in);
 
-struct Position{
-    Position(int x, int y){
-        this->x = x;
-        this->y = y;
-    }
 
-    int x;
-    int y;
-};
 
 class ParseMapData
 {
@@ -47,6 +41,7 @@ private:
     std::vector<Position> obstacle_v;
 
 };
+
 
 
 

@@ -30,7 +30,7 @@ set(INCLUDE
         include/parse_data.h
 
         utils/json.hpp
-        )
+        include/parse_result_data.h include/custom_data.h)
 
 
 set(SOURCE
@@ -38,7 +38,8 @@ set(SOURCE
         src/map_graphic_widget.cpp
         src/grip_map.cpp
         src/grip.cpp
-        src/parse_data.cpp)
+        src/parse_data.cpp
+        src/parse_result_data.cpp)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 qt5_wrap_ui(UI_HEADERS
