@@ -97,6 +97,8 @@ void MapGraphicWidget::slot_load_map_bt()
     ParseMapData parse_map_obj;
     parse_map_obj.parse(in);
 
+    parse_map_obj.print_map_infos();
+
 //    parse_map_data(in);
 
 //    QString line = in.readLine();

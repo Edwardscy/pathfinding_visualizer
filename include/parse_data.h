@@ -20,7 +20,12 @@ using json = nlohmann::json;
 
 void parse_map_data(QTextStream &in);
 
-struct Point{
+struct Position{
+    Position(int x, int y){
+        this->x = x;
+        this->y = y;
+    }
+
     int x;
     int y;
 };
@@ -34,11 +39,12 @@ public:
 public:
     void parse(QTextStream &in);
 
+    void print_map_infos();
 private:
     QString type;
     int height;
     int width;
-    std::vector<Point> obstacle_v;
+    std::vector<Position> obstacle_v;
 
 };
 

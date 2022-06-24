@@ -35,7 +35,8 @@ ParseMapData::~ParseMapData() {
 
 void ParseMapData::parse(QTextStream &in){
 
-    int count = 0;
+    int x{0};
+    int y{0};
     bool is_line_null = false;
     while (!is_line_null){
         QString line = in.readLine();
@@ -69,19 +70,32 @@ void ParseMapData::parse(QTextStream &in){
             }
             else if(line.contains("@") || line.contains(".")){
 
-//                QString s = line;
-//                s = s.remove("width ");
-//                width = s.toInt();
-
-                qDebug() << line;
-
+                x = 0;
+                for(auto item_char:line){
+                    if(item_char != "."){
+                        Position pos(x, y);
+                        obstacle_v.push_back(pos);
+                    }
+                    x++;
+                }
+                y++;
             }
 
-//            qDebug() << line;
-            count++;
         }
     }
-    qDebug() << "count: " << count;
+
 }
 
+
+void ParseMapData::print_map_infos(){
+
+    qDebug() << "type: " << type;
+    qDebug() << "height: " << height;
+    qDebug() << "width: " << width;
+
+//    for(auto item: obstacle_v){
+//        qDebug() << item.x << "  " << item.y;
+//    }
+
+}
 
