@@ -65,7 +65,7 @@ void Grid::setFreeSpaceGraphicsEffect() {
     shadowEffect->setOffset(1, 1);
     shadowEffect->setBlurRadius(5);
     setGraphicsEffect(shadowEffect);
-    setScale(0.8);
+    setScale(1);
     setOpacity(0.8);
     setBrush(QBrush(QColor(255, 255, 255, 255), Qt::SolidPattern));
 }

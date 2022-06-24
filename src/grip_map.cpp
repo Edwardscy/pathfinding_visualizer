@@ -104,6 +104,7 @@ void GridMap::renderGrids(int grid_size) {
     // setting total number of grids in the map
     setNumberOfGrids(no_of_row_grids_ * no_of_row_grids_);
 
+    int pos_offset = -1; // -5
     int free_space_idx = 0;
     for (int col = 0; col < no_of_row_grids_; col++) {
         for (int row = 0; row < no_of_row_grids_; row++) {
@@ -112,7 +113,7 @@ void GridMap::renderGrids(int grid_size) {
 
             // set pos and size
             g->setRect(0, 0, v, v);
-            g->setPos(-5 + row * v, -5 + col * v);
+            g->setPos(pos_offset + row * v, pos_offset + col * v);
             grids_->append(g);
             scene_->addItem(g);
             free_space_idxs_.append(free_space_idx);
@@ -121,23 +122,23 @@ void GridMap::renderGrids(int grid_size) {
     }
 
     // find neighbour indexes for each grid
-    for (int col = 0; col < no_of_row_grids_; col++) {
-        for (int row = 0; row < no_of_row_grids_; row++) {
-            int node_idx = no_of_row_grids_ * col + row;
-            if (row > 0)
-                grids_->at(node_idx)->setNeighbourIdx(col * no_of_row_grids_ +
-                                                      (row - 1));
-            if (row < (no_of_row_grids_ - 1))
-                grids_->at(node_idx)->setNeighbourIdx(col * no_of_row_grids_ +
-                                                      (row + 1));
-            if (col > 0)
-                grids_->at(node_idx)->setNeighbourIdx((col - 1) * no_of_row_grids_ +
-                                                      row);
-            if (col < (no_of_row_grids_ - 1))
-                grids_->at(node_idx)->setNeighbourIdx((col + 1) * no_of_row_grids_ +
-                                                      row);
-        }
-    }
+//    for (int col = 0; col < no_of_row_grids_; col++) {
+//        for (int row = 0; row < no_of_row_grids_; row++) {
+//            int node_idx = no_of_row_grids_ * col + row;
+//            if (row > 0)
+//                grids_->at(node_idx)->setNeighbourIdx(col * no_of_row_grids_ +
+//                                                      (row - 1));
+//            if (row < (no_of_row_grids_ - 1))
+//                grids_->at(node_idx)->setNeighbourIdx(col * no_of_row_grids_ +
+//                                                      (row + 1));
+//            if (col > 0)
+//                grids_->at(node_idx)->setNeighbourIdx((col - 1) * no_of_row_grids_ +
+//                                                      row);
+//            if (col < (no_of_row_grids_ - 1))
+//                grids_->at(node_idx)->setNeighbourIdx((col + 1) * no_of_row_grids_ +
+//                                                      row);
+//        }
+//    }
 
     // default start (top-left) and goal (bottom-right) configurations
     int start_idx = 0;

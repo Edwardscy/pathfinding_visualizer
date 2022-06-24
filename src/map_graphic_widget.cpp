@@ -4,6 +4,8 @@
 
 #include "map_graphic_widget.h"
 
+#include "parse_data.h"
+
 #include <QDebug>
 
 
@@ -41,7 +43,7 @@ void MapGraphicWidget::initUI() {
 
 
     // setting default grid size (50px)
-    int grid_size = 90;
+    int grid_size = 50;
 
     grid_map_ = new GridMap(grid_size, scene_);
     grid_map_->renderGrids(grid_size);
@@ -91,18 +93,26 @@ void MapGraphicWidget::slot_load_map_bt()
 
     /////
     QTextStream in(&file);
-    QString line = in.readLine();
 
-    qDebug() << line;
-    while  (!line.isNull())
-    {
-//         process_line(line);
-        line = in.readLine();
-//        displayString.append(line);
-        qDebug() << line;
-    }
-//    ui->textEdit->clear();
-//    ui->textEdit->setPlainText(displayString);
+    ParseMapData parse_map_obj;
+    parse_map_obj.parse(in);
+
+//    parse_map_data(in);
+
+//    QString line = in.readLine();
+
+
+
+////    qDebug() << line;
+//    while  (!line.isNull())
+//    {
+////         process_line(line);
+//        line = in.readLine();
+////        displayString.append(line);
+//        qDebug() << line;
+//    }
+////    ui->textEdit->clear();
+////    ui->textEdit->setPlainText(displayString);
 
 
 }

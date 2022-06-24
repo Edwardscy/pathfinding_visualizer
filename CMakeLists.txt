@@ -17,6 +17,7 @@ find_package(Qt5 COMPONENTS
 include_directories(include)
 #include_directories(src)
 include_directories(ui)
+include_directories(utils)
 
 #aux_source_directory(include include)
 #aux_source_directory(src src)
@@ -26,7 +27,10 @@ set(INCLUDE
         include/map_graphic_widget.h
         include/grip_map.h
         include/grid.h
-        include/parse_data.h)
+        include/parse_data.h
+
+        utils/json.hpp
+        )
 
 
 set(SOURCE
