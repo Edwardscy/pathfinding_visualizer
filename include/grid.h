@@ -76,6 +76,9 @@ public:
     /** \brief Set path color to this grid. */
     void setPathColor();
 
+public:
+    QColor randomColor();
+
 private:
     /** \brief Flag indicating whether grid is start configuration or not */
     bool is_start_;

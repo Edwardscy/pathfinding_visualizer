@@ -94,3 +94,18 @@ void Grid::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 
+QColor Grid::randomColor(){
+    int r, g, b;
+    QString color_value, stR, stG, stB;
+    r = rand() % 256;
+    g = rand() % 256;
+    b = rand() % 256;
+    bool ok = true;
+    stR.setNum(r, 16); if (stR.toInt(&ok, 16)<16) { stR.prepend("0"); }
+    stG.setNum(g, 16); if (stG.toInt(&ok, 16)<16) { stG.prepend("0"); }
+    stB.setNum(b, 16); if (stB.toInt(&ok, 16)<16) { stB.prepend("0"); }
+    color_value.append("#" + stR + stG + stB);
+
+    return QColor(color_value);
+}
+

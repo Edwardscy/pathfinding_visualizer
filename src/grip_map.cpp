@@ -121,13 +121,21 @@ void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
 
     for(auto pos: obstacle_v){
         // make the indexed grid as obstacle
-
         int idx = pos.x * this->height + pos.y;
 
         grids_->at(idx)->setOccupied();
     }
 
+}
 
+void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& path_map){
+
+    for(auto iter=path_map.begin(); iter != path_map.end(); iter++){
+        qDebug() << iter->first;
+        for(auto item_pos: iter->second){
+            qDebug() << item_pos.x << " " << item_pos.y;
+        }
+    }
 
 }
 

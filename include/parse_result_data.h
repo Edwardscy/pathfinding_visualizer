@@ -27,6 +27,10 @@ public:
     Position parse_item_pos(QString path_str);
 
     void print_map_infos();
+
+public:
+    const std::map<QString, std::vector<Position>>& get_path_map() { return path_map;}
+
 private:
     std::map<QString, std::vector<Position>> path_map;
 

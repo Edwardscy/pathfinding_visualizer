@@ -49,8 +49,8 @@ void MapGraphicWidget::initUI() {
     grid_map_ = new GridMap(grid_size, scene_);
 //    grid_map_->renderGrids(grid_size);
 
-//    grid_map_->render_grids(32, 32);
-    grid_map_->render_grids(8, 8);
+    grid_map_->render_grids(32, 32);
+//    grid_map_->render_grids(8, 8);
 
 }
 
@@ -106,20 +106,7 @@ void MapGraphicWidget::slot_load_map_bt()
     grid_map_->render_grids(parse_map_obj.get_height(), parse_map_obj.get_width());
     grid_map_->render_grids_obstacle(parse_map_obj.get_obstacle_v());
 
-//    parse_map_data(in);
 
-//    QString line = in.readLine();
-
-
-
-////    qDebug() << line;
-//    while  (!line.isNull())
-//    {
-////         process_line(line);
-//        line = in.readLine();
-////        displayString.append(line);
-//        qDebug() << line;
-//    }
 ////    ui->textEdit->clear();
 ////    ui->textEdit->setPlainText(displayString);
 
@@ -163,7 +150,10 @@ void MapGraphicWidget::slot_load_cbs_result_bt()
     ParseResultData parse_result_obj;
     parse_result_obj.parse(in);
 
-    parse_result_obj.print_map_infos();
+//    parse_result_obj.print_map_infos();
+
+    grid_map_->renderResultGrids(parse_result_obj.get_path_map());
+
 }
 
 

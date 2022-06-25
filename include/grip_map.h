@@ -12,6 +12,8 @@
 #include <QObject>
 
 #include <vector>
+#include <map>
+
 #include "custom_data.h"
 
 #include "grid.h"
@@ -79,6 +81,8 @@ public slots:
 
     void render_grids(int height, int width);
     void render_grids_obstacle(const std::vector<Position>& obstacle_v);
+
+    void renderResultGrids(const std::map<QString, std::vector<Position>>& path_map);
 
 private:
     /** \brief Grid size of the map. */
