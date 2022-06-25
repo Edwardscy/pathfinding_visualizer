@@ -80,6 +80,57 @@ void GridMap::clearObstacles() {
     }
 }
 
+void GridMap::render_grids(int height, int width){
+
+    this->height = height;
+    this->width = width;
+
+    // clear the grids
+    grids_->clear();
+
+    // clear the scene (also delete the objects)
+    scene_->clear();
+
+    // get grid size
+    int v = std::max((int)(ceil(800 / height)), (int)(ceil(800 / width)));
+
+     // setting total number of grids in the map
+    number_of_grids_ = width * height;
+
+    for (int col = 0; col < width; col++) {
+        for (int row = 0; row < height; row++) {
+            // create grid obj
+            Grid *g = new Grid(this);
+
+            // set pos and size
+            g->setRect(0, 0, v, v);
+            g->setPos(row * v,  col * v);
+
+            grids_->append(g);
+            scene_->addItem(g);
+
+        }
+    }
+
+}
+
+
+void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
+
+    clearObstacles();
+
+    for(auto pos: obstacle_v){
+        // make the indexed grid as obstacle
+
+        int idx = pos.x * this->height + pos.y;
+
+        grids_->at(idx)->setOccupied();
+    }
+
+
+
+}
+
 void GridMap::renderGrids(int grid_size) {
     setGridSize(grid_size);
 
@@ -121,7 +172,7 @@ void GridMap::renderGrids(int grid_size) {
         }
     }
 
-    // find neighbour indexes for each grid
+//     find neighbour indexes for each grid
 //    for (int col = 0; col < no_of_row_grids_; col++) {
 //        for (int row = 0; row < no_of_row_grids_; row++) {
 //            int node_idx = no_of_row_grids_ * col + row;
@@ -141,16 +192,16 @@ void GridMap::renderGrids(int grid_size) {
 //    }
 
     // default start (top-left) and goal (bottom-right) configurations
-    int start_idx = 0;
-    int goal_idx =
-            no_of_row_grids_ * (no_of_row_grids_ - 1) + (no_of_row_grids_ - 1);
+//    int start_idx = 0;
+//    int goal_idx =
+//            no_of_row_grids_ * (no_of_row_grids_ - 1) + (no_of_row_grids_ - 1);
 //    start_grid_ = grids_->at(start_idx);
 //    start_grid_->setStart();
 //    goal_grid_ = grids_->at(goal_idx);
 //    goal_grid_->setGoal();
 
-    free_space_idxs_.removeOne(start_idx);
-    free_space_idxs_.removeOne(goal_idx);
+//    free_space_idxs_.removeOne(start_idx);
+//    free_space_idxs_.removeOne(goal_idx);
 }
 
 void GridMap::isGridClicked(Grid *grid) {

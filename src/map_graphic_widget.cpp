@@ -35,7 +35,7 @@ void MapGraphicWidget::initUI() {
     ui_->setupUi(this);
 
     scene_ = new QGraphicsScene(this);
-    scene_->setSceneRect(0, 0, 500, 500);
+    scene_->setSceneRect(0, 0, 800, 800);
 
 
     ui_->graphic_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -47,7 +47,10 @@ void MapGraphicWidget::initUI() {
     int grid_size = 50;
 
     grid_map_ = new GridMap(grid_size, scene_);
-    grid_map_->renderGrids(grid_size);
+//    grid_map_->renderGrids(grid_size);
+
+//    grid_map_->render_grids(32, 32);
+    grid_map_->render_grids(8, 8);
 
 }
 
@@ -99,6 +102,9 @@ void MapGraphicWidget::slot_load_map_bt()
     parse_map_obj.parse(in);
 
     parse_map_obj.print_map_infos();
+
+    grid_map_->render_grids(parse_map_obj.get_height(), parse_map_obj.get_width());
+    grid_map_->render_grids_obstacle(parse_map_obj.get_obstacle_v());
 
 //    parse_map_data(in);
 

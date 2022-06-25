@@ -34,6 +34,11 @@ public:
     void parse(QTextStream &in);
 
     void print_map_infos();
+
+public:
+    const int& get_height() { return height;}
+    const int& get_width() { return width;}
+    const std::vector<Position>& get_obstacle_v() { return obstacle_v;}
 private:
     QString type;
     int height;

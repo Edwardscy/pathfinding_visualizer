@@ -11,6 +11,9 @@
 #include <QList>
 #include <QObject>
 
+#include <vector>
+#include "custom_data.h"
+
 #include "grid.h"
 
 class GridMap : public QObject {
@@ -74,6 +77,9 @@ public slots:
      *   when each grid in the map sends a clicked signal. */
     void isGridClicked(Grid *grid);
 
+    void render_grids(int height, int width);
+    void render_grids_obstacle(const std::vector<Position>& obstacle_v);
+
 private:
     /** \brief Grid size of the map. */
     int grid_size_;
@@ -105,6 +111,10 @@ private:
 
     /** \brief Flag for indicating whether editing map mode or not. */
     bool edit_map_mode_;
+
+    //
+    int height;
+    int width;
 };
 
 #endif //PATHFINDING_VISUALIZER_GRIP_MAP_H
