@@ -10,12 +10,10 @@
 #include <QString>
 #include <QDebug>
 
+#include <map>
+
 #include "custom_data.h"
 
-#include "json.hpp"
-
-
-using json = nlohmann::json;
 
 
 class ParseResultData
@@ -26,15 +24,12 @@ public:
 
 public:
     void parse(QTextStream &in);
-    void parse_item_pos(QString path_str);
+    Position parse_item_pos(QString path_str);
 
     void print_map_infos();
 private:
-    json result_json;
-//    QString type;
-//    int height;
-//    int width;
-//    std::vector<Position> obstacle_v;
+    std::map<QString, std::vector<Position>> path_map;
+
 
 };
 
