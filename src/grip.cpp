@@ -33,6 +33,7 @@ void Grid::setOccupied() {
     setBrush(QBrush(QColor(0, 0, 0, 255), Qt::SolidPattern));
 }
 
+
 void Grid::setFree() {
     is_occupied_ = false;
     is_start_ = false;
@@ -96,6 +97,7 @@ void Grid::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 QColor Grid::randomColor(){
     int r, g, b;
+
     QString color_value, stR, stG, stB;
     r = rand() % 256;
     g = rand() % 256;
@@ -109,3 +111,8 @@ QColor Grid::randomColor(){
     return QColor(color_value);
 }
 
+void Grid::setItemGridColor(const QColor& color){
+
+    setBrush(QBrush(color, Qt::SolidPattern));
+
+}

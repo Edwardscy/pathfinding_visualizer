@@ -28,6 +28,8 @@ GridMap::GridMap(int grid_size, QGraphicsScene *scene)
     graphics_text_ = new QList<GraphicsText* >();
     path_ = new QList<Path* >();
 
+    this->step = 0;
+
 }
 
 GridMap::~GridMap() { delete grids_; }
@@ -89,8 +91,25 @@ void GridMap::clearObstacles() {
     }
 }
 
+QColor GridMap::randomColor(){
+
+    int r, g, b;
+    QString color_value, stR, stG, stB;
+    r = rand() % 200;
+    g = rand() % 200;
+    b = rand() % 200;
+    bool ok = true;
+    stR.setNum(r, 16); if (stR.toInt(&ok, 16)<16) { stR.prepend("0"); }
+    stG.setNum(g, 16); if (stG.toInt(&ok, 16)<16) { stG.prepend("0"); }
+    stB.setNum(b, 16); if (stB.toInt(&ok, 16)<16) { stB.prepend("0"); }
+    color_value.append("#" + stR + stG + stB);
+
+    return QColor(color_value);
+}
+
 void GridMap::render_grids(int height, int width){
 
+    this->step = 0;
     this->height = height;
     this->width = width;
 
@@ -139,6 +158,10 @@ void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
 
 void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& path_map){
 
+    this->step = 0;
+    this->path_map = path_map;
+
+    agent_color_map.clear();
     // get grid size
     int v = std::max((int)(ceil(800 / this->height)), (int)(ceil(800 / this->width)));
 
@@ -163,8 +186,20 @@ void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& 
         goal_text->setPlainText(agent_name_goal);
         goal_text->setPos(goal_pos.x * v,  goal_pos.y * v);
         scene_->addItem(goal_text);
-        qDebug() << iter->second.back().x << " " << iter->second.back().y;
 
+        QColor color = randomColor();
+
+        agent_color_map.insert(std::pair<QString, QColor>(iter->first, color));
+
+
+//        int start_idx = start_pos.x + start_pos.y * this->height ;
+//        int goal_idx = goal_pos.x + goal_pos.y * this->height;
+
+        int start_idx = start_pos.x + start_pos.y * this->height;
+        int goal_idx = goal_pos.x + goal_pos.y * this->height;
+
+        grids_->at(start_idx)->setItemGridColor(color);
+        grids_->at(goal_idx)->setItemGridColor(color);
 
 //        for(auto item_pos: iter->second){
 //            qDebug() << item_pos.x << " " << item_pos.y;
@@ -177,6 +212,56 @@ void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& 
 //            scene_->addItem(g_text);
 //        }
     }
+
+}
+
+
+void GridMap::lastStep() {
+
+    if(this->step > 1){
+        this->step--;
+    }
+
+    for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+
+        QString agent_name = iter->first;
+        QColor color = QColor(255, 255, 255, 255);
+
+        if(this->step < (iter->second.size() - 1)){
+            int idx = iter->second.at(this->step).y * this->height + iter->second.at(this->step).x;
+            grids_->at(idx)->setItemGridColor(color);
+        }
+
+    }
+}
+
+void GridMap::nextStep() {
+
+//    for(auto iter=agent_color_map.begin(); iter != agent_color_map.end(); iter++){
+//
+//        qDebug() << iter->first;
+//        qDebug() << iter->second;
+//    }
+
+    for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+
+        QString agent_name = iter->first;
+        QColor color;
+        auto agent_color_iter = agent_color_map.find(agent_name);
+        if(agent_color_iter != agent_color_map.end()){
+            color = agent_color_iter->second;
+        }
+
+        if(this->step <= (iter->second.size() - 1)){
+            int idx = iter->second.at(this->step).y * this->height + iter->second.at(this->step).x;
+            grids_->at(idx)->setItemGridColor(color);
+        }
+
+//        qDebug() << iter->second.size();
+
+    }
+
+    this->step++;
 
 }
 

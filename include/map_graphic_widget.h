@@ -41,6 +41,9 @@ public slots:
     void slot_load_map_bt();
     void slot_load_cbs_result_bt();
 
+    void slot_last_step_bt();
+    void slot_next_step_bt();
+
 private:
     Ui_main_widget* ui_;
 

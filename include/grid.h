@@ -79,6 +79,7 @@ public:
 public:
     QColor randomColor();
 
+    void setItemGridColor(const QColor& color);
 private:
     /** \brief Flag indicating whether grid is start configuration or not */
     bool is_start_;

@@ -63,6 +63,13 @@ void MapGraphicWidget::initConnect() {
 
     connect(ui_->load_cbs_result_bt, SIGNAL(clicked()), this,
             SLOT(slot_load_cbs_result_bt()));
+
+    connect(ui_->last_step_bt, SIGNAL(clicked()), this,
+            SLOT(slot_last_step_bt()));
+
+    connect(ui_->next_step_bt, SIGNAL(clicked()), this,
+            SLOT(slot_next_step_bt()));
+
 }
 
 
@@ -159,6 +166,16 @@ void MapGraphicWidget::slot_load_cbs_result_bt()
 }
 
 
+void MapGraphicWidget::slot_last_step_bt() {
+    grid_map_->lastStep();
+}
+
+void MapGraphicWidget::slot_next_step_bt() {
+
+    grid_map_->nextStep();
+}
+
+
 void MapGraphicWidget::parse_map_file()
 {
 
@@ -168,5 +185,7 @@ void MapGraphicWidget::parse_cbs_result_file()
 {
 
 }
+
+
 
 

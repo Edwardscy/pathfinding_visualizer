@@ -78,6 +78,9 @@ public:
     /** \brief Clear all obstacles in the map. */
     void clearObstacles();
 
+public:
+    QColor randomColor();
+
 public slots:
     /** \brief Slot function for rendering grids. */
     void renderGrids(int grid_size);
@@ -90,6 +93,9 @@ public slots:
     void render_grids_obstacle(const std::vector<Position>& obstacle_v);
 
     void renderResultGrids(const std::map<QString, std::vector<Position>>& path_map);
+
+    void lastStep();
+    void nextStep();
 
     void test();
 
@@ -129,10 +135,15 @@ private:
     int height;
     int width;
 
+    int step;
     //
     QList<Ellipse* > *ellipse_;
     QList<GraphicsText* > *graphics_text_;
     QList<Path* > *path_;
+
+    std::map<QString, QColor> agent_color_map;
+    std::map<QString, std::vector<Position>> path_map;
+
 };
 
 #endif //PATHFINDING_VISUALIZER_GRIP_MAP_H
