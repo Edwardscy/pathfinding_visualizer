@@ -19,7 +19,16 @@ GridMap::GridMap(int grid_size, QGraphicsScene *scene)
           scene_{scene},
           is_start_config_button_checked_{true},
           place_config_mode_{false},
-          edit_map_mode_{false} {}
+          edit_map_mode_{false}
+
+{
+
+    ellipse_ = new QList<Ellipse *>();
+
+    graphics_text_ = new QList<GraphicsText* >();
+    path_ = new QList<Path* >();
+
+}
 
 GridMap::~GridMap() { delete grids_; }
 
@@ -130,11 +139,43 @@ void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
 
 void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& path_map){
 
+    // get grid size
+    int v = std::max((int)(ceil(800 / this->height)), (int)(ceil(800 / this->width)));
+
     for(auto iter=path_map.begin(); iter != path_map.end(); iter++){
         qDebug() << iter->first;
-        for(auto item_pos: iter->second){
-            qDebug() << item_pos.x << " " << item_pos.y;
-        }
+
+        QString agent_name = iter->first;
+        QString agent_id = agent_name.remove(QRegExp("Agent "));
+        QString agent_name_start = "A" + agent_id;
+
+        QString agent_name_goal = "G" + agent_id;
+
+        auto start_pos = iter->second.at(0);
+        GraphicsText *start_text = new GraphicsText(this);
+        start_text->setPlainText(agent_name_start);
+        start_text->setPos(start_pos.x * v,  start_pos.y * v);
+        scene_->addItem(start_text);
+
+        ///
+        auto goal_pos = iter->second.back();
+        GraphicsText *goal_text = new GraphicsText(this);
+        goal_text->setPlainText(agent_name_goal);
+        goal_text->setPos(goal_pos.x * v,  goal_pos.y * v);
+        scene_->addItem(goal_text);
+        qDebug() << iter->second.back().x << " " << iter->second.back().y;
+
+
+//        for(auto item_pos: iter->second){
+//            qDebug() << item_pos.x << " " << item_pos.y;
+//
+//            GraphicsText *g_text = new GraphicsText(this);
+//
+//            g_text->setPlainText("A0");
+//            g_text->setPos(item_pos.x * v,  item_pos.y * v);
+//
+//            scene_->addItem(g_text);
+//        }
     }
 
 }
@@ -265,3 +306,53 @@ void GridMap::isGridClicked(Grid *grid) {
     }
 }
 
+void GridMap::test(){
+
+    int height = 32;
+    int width = 32;
+
+    // clear the grids
+//    ellipse_->clear();
+
+    // clear the scene (also delete the objects)
+    scene_->clear();
+
+    // get grid size
+    int v = std::max((int)(ceil(800 / height)), (int)(ceil(800 / width)));
+
+    // setting total number of grids in the map
+    number_of_grids_ = width * height;
+
+    for (int col = 0; col < width; col++) {
+        for (int row = 0; row < height; row++) {
+            // create grid obj
+            Grid *g = new Grid(this);
+
+            // set pos and size
+            g->setRect(0, 0, v, v);
+            g->setPos(row * v,  col * v);
+
+//            grids_->append(g);
+            scene_->addItem(g);
+
+            // create grid obj
+//            Ellipse *g = new Ellipse(this);
+//
+//            // set pos and size
+//            g->setRect(0, 0, v, v);
+//            g->setPos(row * v,  col * v);
+//
+////            ellipse_->append(g);
+//            scene_->addItem(g);
+
+            QGraphicsTextItem* t = new QGraphicsTextItem();
+
+            t->setPlainText("A0");
+            t->setPos(row * v,  col * v);
+
+            scene_->addItem(t);
+
+
+        }
+    }
+}

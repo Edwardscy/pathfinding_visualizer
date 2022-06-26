@@ -52,6 +52,8 @@ void MapGraphicWidget::initUI() {
     grid_map_->render_grids(32, 32);
 //    grid_map_->render_grids(8, 8);
 
+//    grid_map_->test();
+
 }
 
 void MapGraphicWidget::initConnect() {

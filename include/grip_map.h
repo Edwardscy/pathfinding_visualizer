@@ -11,12 +11,19 @@
 #include <QList>
 #include <QObject>
 
+#include <QGraphicsTextItem>
+
 #include <vector>
 #include <map>
 
 #include "custom_data.h"
 
 #include "grid.h"
+
+#include "ellipse.h"
+#include "path.h"
+#include "graphic_text.h"
+
 
 class GridMap : public QObject {
 Q_OBJECT
@@ -84,6 +91,8 @@ public slots:
 
     void renderResultGrids(const std::map<QString, std::vector<Position>>& path_map);
 
+    void test();
+
 private:
     /** \brief Grid size of the map. */
     int grid_size_;
@@ -119,6 +128,11 @@ private:
     //
     int height;
     int width;
+
+    //
+    QList<Ellipse* > *ellipse_;
+    QList<GraphicsText* > *graphics_text_;
+    QList<Path* > *path_;
 };
 
 #endif //PATHFINDING_VISUALIZER_GRIP_MAP_H
