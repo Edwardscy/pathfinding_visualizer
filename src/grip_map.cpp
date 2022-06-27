@@ -125,14 +125,14 @@ void GridMap::render_grids(int height, int width){
      // setting total number of grids in the map
     number_of_grids_ = width * height;
 
-    for (int col = 0; col < width; col++) {
-        for (int row = 0; row < height; row++) {
+    for (int row = 0; row < height; row++) {
+         for (int col = 0; col < width; col++) {
             // create grid obj
             Grid *g = new Grid(this);
 
             // set pos and size
             g->setRect(0, 0, v, v);
-            g->setPos(row * v,  col * v);
+            g->setPos(col * v,  row * v);
 
             grids_->append(g);
             scene_->addItem(g);
@@ -149,7 +149,7 @@ void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
 
     for(auto pos: obstacle_v){
         // make the indexed grid as obstacle
-        int idx = pos.x * this->height + pos.y;
+        int idx = pos.x + pos.y * this->height;
 
         grids_->at(idx)->setOccupied();
     }

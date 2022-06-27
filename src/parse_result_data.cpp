@@ -83,7 +83,7 @@ Position ParseResultData::parse_item_pos(QString path_str){
 
 //    qDebug() << path_str << "x: " << x << "y: " << y;
 
-    Position pos(x, y);
+    Position pos(y, x);
     return pos;
 
 }
