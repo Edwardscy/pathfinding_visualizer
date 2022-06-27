@@ -158,6 +158,12 @@ void GridMap::render_grids_obstacle(const std::vector<Position>& obstacle_v){
 
 void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& path_map){
 
+    for (int i = 0; i < grids_->size(); i++) {
+        if (!grids_->at(i)->isOccupied()) {
+            grids_->at(i)->setFree();
+        }
+    }
+
     this->step = 0;
     this->path_map = path_map;
 
@@ -218,22 +224,108 @@ void GridMap::renderResultGrids(const std::map<QString, std::vector<Position>>& 
 
 void GridMap::lastStep() {
 
-    if(this->step > 1){
+    if(this->step >= 1){
         this->step--;
     }
 
-    for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+    //////////////////////////////
+    for (int i = 0; i < grids_->size(); i++) {
+        if (!grids_->at(i)->isOccupied()) {
+            grids_->at(i)->setFree();
+        }
+    }
+
+    // get grid size
+    int v = std::max((int)(ceil(800 / this->height)), (int)(ceil(800 / this->width)));
+
+    for(auto iter=path_map.begin(); iter != path_map.end(); iter++) {
+        qDebug() << iter->first;
 
         QString agent_name = iter->first;
-        QColor color = QColor(255, 255, 255, 255);
+        QString agent_id = agent_name.remove(QRegExp("Agent "));
+        QString agent_name_start = "A" + agent_id;
 
-        if(this->step < (iter->second.size() - 1)){
-            int idx = iter->second.at(this->step).y * this->height + iter->second.at(this->step).x;
-            grids_->at(idx)->setItemGridColor(color);
+        QString agent_name_goal = "G" + agent_id;
+
+        auto start_pos = iter->second.at(0);
+        GraphicsText *start_text = new GraphicsText(this);
+        start_text->setPlainText(agent_name_start);
+        start_text->setPos(start_pos.x * v, start_pos.y * v);
+        scene_->addItem(start_text);
+
+        auto goal_pos = iter->second.back();
+        GraphicsText *goal_text = new GraphicsText(this);
+        goal_text->setPlainText(agent_name_goal);
+        goal_text->setPos(goal_pos.x * v, goal_pos.y * v);
+        scene_->addItem(goal_text);
+
+        QColor color;
+        auto agent_color_iter = agent_color_map.find(iter->first);
+        if(agent_color_iter != agent_color_map.end()){
+            color = agent_color_iter->second;
         }
 
+        int start_idx = start_pos.x + start_pos.y * this->height;
+        int goal_idx = goal_pos.x + goal_pos.y * this->height;
+
+        grids_->at(start_idx)->setItemGridColor(color);
+        grids_->at(goal_idx)->setItemGridColor(color);
+
     }
+    //////////////////////////////
+
+    for(int i = 0; i <= this->step; i++){
+        for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+
+            QString agent_name = iter->first;
+            QColor color;
+            auto agent_color_iter = agent_color_map.find(agent_name);
+            if(agent_color_iter != agent_color_map.end()){
+                color = agent_color_iter->second;
+            }
+
+            if(i <= (iter->second.size() - 1)){
+                int idx = iter->second.at(i).y * this->height + iter->second.at(i).x;
+                grids_->at(idx)->setItemGridColor(color);
+            }
+        }
+    }
+
 }
+
+//void GridMap::lastStep() {
+//
+//    if(this->step > 1){
+//        this->step--;
+//    }
+//
+//    for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+//
+//        QString agent_name = iter->first;
+//        QColor color = QColor(255, 255, 255, 255);
+//
+//        if(this->step < (iter->second.size() - 1)){
+//            int idx = iter->second.at(this->step).y * this->height + iter->second.at(this->step).x;
+//            grids_->at(idx)->setItemGridColor(color);
+//        }
+//    }
+//
+////    int last_step = this->step - 1;
+////    for(auto iter=this->path_map.begin(); iter != this->path_map.end(); iter++){
+////
+////        QString agent_name = iter->first;
+////        QColor color;
+////        auto agent_color_iter = agent_color_map.find(agent_name);
+////        if(agent_color_iter != agent_color_map.end()){
+////            color = agent_color_iter->second;
+////        }
+////
+////        if(last_step <= (iter->second.size() - 1) && last_step>=0){
+////            int idx = iter->second.at(last_step).y * this->height + iter->second.at(last_step).x;
+////            grids_->at(idx)->setItemGridColor(color);
+////        }
+////    }
+//}
 
 void GridMap::nextStep() {
 
